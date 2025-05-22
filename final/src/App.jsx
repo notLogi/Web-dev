@@ -9,9 +9,11 @@ import { addDoc, collection, getDocs, updateDoc, deleteDoc } from 'firebase/fire
 function App() {
   const [count, setCount] = useState(0);
   const [docRef, setDocRef] = useState(null);
+  const [loading, setLoading] = useState(true);//to avoid race condition
 
   useEffect(() => {
     const loadCollection = async () => {
+      setLoading(true);
       const collectionRef = collection(db, "test");
       const snap = await getDocs(collectionRef);
 
@@ -23,22 +25,25 @@ function App() {
         });
         setDocRef(newDoc);
         setCount(0);
+        setLoading(false);
         return;
       }
 
       if (snap.docs.length > 1) {
+        console.log("two documents");
         const firstDoc = snap.docs[1];
         setDocRef(firstDoc.ref);
         setCount(firstDoc.data().count);
 
-        await deleteDoc(snap.docs[0].ref);//when you spam click the increment button before it loads from the backend, the second doc doesn't get removed. To counter this, I delete the first one
-
+        await deleteDoc(snap.docs[0].ref);
+        setLoading(false);
         return;
       }
 
       const firstDoc = snap.docs[0];
       setCount(firstDoc.data().count);
       setDocRef(firstDoc.ref);
+      setLoading(false);
     };
 
     loadCollection();
@@ -55,18 +60,7 @@ function App() {
   }, [count]);
 
   const incrementButton = async () => {
-    if (!docRef) {
-      const collectionRef = collection(db, "test");
-      const newDoc = await addDoc(collectionRef, {
-        uid: "test",
-        createdAt: new Date(),
-        count: 1,
-      });
-      setDocRef(newDoc);
-      setCount(1);
-    } else {
-      setCount((prev) => prev + 1);
-    }
+    setCount((prev) => prev + 1);
   };
 
   const deleteButton = async () => {
@@ -75,6 +69,14 @@ function App() {
       setDocRef(null);
       setCount(0);
     }
+    const collectionRef = collection(db, "test");
+    const newDoc = await addDoc(collectionRef, {
+      uid: "test",
+      createdAt: new Date(),
+      count: 0,
+    });
+    setDocRef(newDoc);
+    setCount(0);
   };
 
   return (
@@ -89,12 +91,13 @@ function App() {
       </div>
       <h1>Final Project</h1>
       <div className="card">
-        <button onClick={incrementButton}>
-          count is {count}
-        </button>
-        <button onClick={deleteButton}>
-          Delete
-        </button>
+<button onClick={incrementButton} disabled={loading}>
+  {loading ? "Loading..." : `count is ${count}`}
+</button>
+<button onClick={deleteButton} disabled={loading}>
+  Delete
+</button>
+
       </div>
       <p className="read-the-docs">
         Counter will be kept on cloud
