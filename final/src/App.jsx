@@ -31,11 +31,13 @@ function App() {
 
       if (snap.docs.length > 1) {
         console.log("two documents");
-        const firstDoc = snap.docs[1];
+        const firstDoc = snap.docs[0];
         setDocRef(firstDoc.ref);
         setCount(firstDoc.data().count);
-
-        await deleteDoc(snap.docs[0].ref);
+        
+        for(let i = 1; i < snap.docs.length; i++){
+          await deleteDoc(snap.docs[i].ref);
+        }
         setLoading(false);
         return;
       }
@@ -62,21 +64,34 @@ function App() {
   const incrementButton = async () => {
     setCount((prev) => prev + 1);
   };
-
+  
   const deleteButton = async () => {
     if (docRef) {
+      setLoading(true);
       await deleteDoc(docRef);
       setDocRef(null);
       setCount(0);
+      const collectionRef = collection(db, "test");
+      const newDoc = await addDoc(collectionRef, {
+        uid: "test",
+        createdAt: new Date(),
+        count: 0,
+      });
+      setDocRef(newDoc);
+      setCount(0);
+      const snap = await getDocs(collectionRef);
+      if (snap.docs.length > 1) {
+        const firstDoc = snap.docs[0];
+        setDocRef(firstDoc.ref);
+        setCount(firstDoc.data().count);
+        
+        for(let i = 1; i < snap.docs.length; i++){//autoclicker can bug out the first condition of the function, so i have add a second checker
+          await deleteDoc(snap.docs[i].ref);
+        }
+        return;
+      }
+      setLoading(false);
     }
-    const collectionRef = collection(db, "test");
-    const newDoc = await addDoc(collectionRef, {
-      uid: "test",
-      createdAt: new Date(),
-      count: 0,
-    });
-    setDocRef(newDoc);
-    setCount(0);
   };
 
   return (
@@ -91,13 +106,12 @@ function App() {
       </div>
       <h1>Final Project</h1>
       <div className="card">
-<button onClick={incrementButton} disabled={loading}>
-  {loading ? "Loading..." : `count is ${count}`}
-</button>
-<button onClick={deleteButton} disabled={loading}>
-  Delete
-</button>
-
+        <button onClick={incrementButton} disabled={loading}>
+          {loading ? "Loading..." : `count is ${count}`}
+        </button>
+        <button onClick={deleteButton} disabled={loading}>
+          Delete
+        </button>
       </div>
       <p className="read-the-docs">
         Counter will be kept on cloud
