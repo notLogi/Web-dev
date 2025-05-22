@@ -1,0 +1,46 @@
+[debug] [2025-05-12T22:11:08.361Z] ----------------------------------------------------------------------
+[debug] [2025-05-12T22:11:08.362Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Roger\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2025-05-12T22:11:08.362Z] CLI Version:   14.3.1
+[debug] [2025-05-12T22:11:08.362Z] Platform:      win32
+[debug] [2025-05-12T22:11:08.363Z] Node Version:  v22.14.0
+[debug] [2025-05-12T22:11:08.363Z] Time:          Mon May 12 2025 18:11:08 GMT-0400 (Eastern Daylight Time)
+[debug] [2025-05-12T22:11:08.363Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-12T22:11:08.366Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-12T22:11:08.366Z] > authorizing via signed-in user (suroger123@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Roger\Documents\GitHub\Web dev
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-05-12T22:11:10.366Z] Checked if tokens are valid: true, expires at: 1747090248740
+[debug] [2025-05-12T22:11:10.366Z] Checked if tokens are valid: true, expires at: 1747090248740
+[debug] [2025-05-12T22:11:10.367Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2025-05-12T22:11:10.705Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2025-05-12T22:11:10.705Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project final-web-dev-project (final web dev project) 
+[info] 
+=== Hosting Setup
+[debug] [2025-05-12T22:11:11.784Z] Checked if tokens are valid: true, expires at: 1747090248740
+[debug] [2025-05-12T22:11:11.784Z] Checked if tokens are valid: true, expires at: 1747090248740
+[debug] [2025-05-12T22:11:11.784Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/final-web-dev-project [none]
+[debug] [2025-05-12T22:11:11.964Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/final-web-dev-project 200
+[debug] [2025-05-12T22:11:11.965Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/final-web-dev-project {"projectId":"final-web-dev-project","projectNumber":"820962076457","displayName":"final web dev project","name":"projects/final-web-dev-project","resources":{"hostingSite":"final-web-dev-project"},"state":"ACTIVE","etag":"1_7315da8b-5f5d-4ca3-9412-37de00ccab1b"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
