@@ -27,13 +27,12 @@ function App() {
       }
 
       if (snap.docs.length > 1) {
-        const firstDoc = snap.docs[0];
+        const firstDoc = snap.docs[1];
         setDocRef(firstDoc.ref);
         setCount(firstDoc.data().count);
 
-        for (let i = 1; i < snap.docs.length; i++) {
-          await deleteDoc(snap.docs[i].ref);
-        }
+        await deleteDoc(snap.docs[0].ref);//when you spam click the increment button before it loads from the backend, the second doc doesn't get removed. To counter this, I delete the first one
+
         return;
       }
 
@@ -43,7 +42,7 @@ function App() {
     };
 
     loadCollection();
-  }, []);
+  },[]);
 
   useEffect(() => {
     if (!docRef) return;
